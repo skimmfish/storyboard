@@ -1,89 +1,166 @@
-
-@extends('layouts.app')
+@extends('layouts.simple_pages_header')
 @section('content')
 
-<div class="container centra">
-<!--2 columns with one image box and the other title-->
+<!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+    <!-- Article Description -->
+    <div class="container content-space-t-3 content-space-t-lg-4 content-space-b-2">
+      <div class="w-lg-65 mx-lg-auto">
+        <div class="mb-4">
+        <h1 class="h2 center text-lg text-xs gd" style="text-transform:Capitalize;">{{$post->post_title}}</h1>
 
-<!--post body-->
+    </div>
 
-<div class="body">
+        <div class="row align-items-sm-center mb-5">
+          <div class="col-sm-7 mb-4 mb-sm-0">
+            <!-- Media -->
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
 
-<div class="title_layer">
-	<div class="author_img"><img src="{{ asset('img/'.$post->post_bg_img) }}" class="img-rd"/><br/><small>{{$post->author}}</small></div>
-		<div class="post_title">{{ $post->post_title }}
-			<br/>
-				<b class="time">Posted on {{ date('d, F Y h:i:s A',strtotime($post->created_at)) }} / <a href="/categories/{{ $post->category }}">{{ ucfirst($post->category) }}</a></b>
-					</div>
+			<img class="avatar avatar-circle" src="{{ asset('img/160x160/'.\App\Models\User::find($post->user_id)->profile_img)}}" alt="{{\App\Models\User::find($post->user_id)->username}}">
+              </div>
 
-<!--closing the title_layer-->
+              <div class="flex-grow-1 ms-3">
+                <h5 class="mb-0">
+                  <a class="text-dark text-sm" href="{{route('author.storyprofile',['id'=>$post->user_id])}}">{{\App\Models\User::find($post->user_id)->name}}</a>
+                </h5>
+                <span class="d-block small">1 day ago</span>
+              </div>
+            </div>
+            <!-- End Media -->
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm-5">
+            <div class="d-flex justify-content-sm-end align-items-center">
+              <span class="text-cap mb-0 me-2 text-sm" style="font-size:11px"><small>Follow Us</small></span>
+
+              <div class="d-flex gap-2">
+                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
+                  <i class="bi-facebook"></i>
+                </a>
+                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
+                  <i class="bi-twitter"></i>
+                </a>
+                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
+                  <i class="bi-instagram"></i>
+                </a>
+                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
+                  <i class="bi-telegram"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+<div class="floating_widget">
+<div class="share-box close-btn">x</div>
+
+<!--facebook-->
+<div class="share-box" style="border:0"><i class="bi-facebook"></i></div>
+<!--twitter-->
+<div class="share-box" style="border:0"><i class="bi-twitter"></i></div>
+<!--twitter-->
+<div class="share-box" style="border:0"><i class="bi-instagram"></i></div>
+<div class="share-box" style="border:0;margin-left:-12px;margin-top:-8px;"><div class="count_box">{{ $claps }}</div>
+<img src="{{asset('img/icons/clap2.png')}}" class="share-brand" style="width:68px;height:68px;" loading="lazy"/></div>
+
 </div>
-<hr/>
-<!--post_body-->
-<p class="texts_p">
-{{$post->description}}
+
+<div class="my-4 my-sm-8">
+        <img class="img-fluid rounded-lg" src="{{ asset('img/1920x1080/'.$post->post_bg_img) }}" alt="{{$post->post_title}}">
+      </div>
+
+      <div class="w-lg-100 mx-lg-auto gd">
+        <p style="line-height:40px;">
+		{{ $post->post_body }}
 </p>
-<div class="post_img_description">
 
-	<img src="{{asset('img/'.$post->post_bg_img)}}" class="img-responsive img-rounded"/>
 
-</div>
+        <!-- Blockquote -->
+        <figure class="bg-light text-center p-7 my-7">
+          <blockquote class="blockquote blockquote-lg family-font text-md">We support humanity, we give back to the needy You may contribute your quota by <a href="https://paypal.me/eolabiyi">dropping your widow's mite here <img src="{{asset('img/icons/tea-cup.jpg') }}" class="img-responsive img-circled" alt="Tea cup" loading="lazy"></img></a> </blockquote>
+          <!--
+          <figcaption class="blockquote-footer">
+            Emmanuel
+            <span class="blockquote-footer-source"><i>For the Management</i></span>
+          </figcaption>-->
+        </figure>
+        <!-- End Blockquote -->
 
-<!--end of post body-->
+        </div>
+      <div class="w-lg-100 mx-lg-auto" style="line-height:40px;">
 
-<div class="post_body texts_p">
-<p class="main-post">{{$post->post_body}}</p>
-</div>
+        <!-- Card -->
+        <div class="card bg-dark text-center my-4" style="background-image: url(assets/svg/components/wave-pattern-light.svg);">
+          <div class="card-body">
+            <h4 class="text-white mb-4">Want to get the next episode in your email? Subscribe to our mailing list!</h4>
 
-<div class="text_ads_card card"></div>
+            <div class="w-lg-75 mx-lg-auto">
+              <form method="POST" action="{{ route('emailsubscription') }}">
+			                          {{ csrf_field() }}
 
-<!--end of post body-->
-<!--all comments go here-->
+                <!-- Input Card -->
+                <div class="input-card input-card-sm border">
+                  <div class="input-card-form">
+                    <label for="subscribeForm" class="form-label visually-hidden">Enter email</label>
+                    <input type="email" class="form-control" id="subscribeForm" value="{{ old('email') }}" placeholder="Enter email" aria-label="Enter email" required />
+                  </div>
+                  <button type="button" class="btn btn-primary">Subscribe</button>
+                </div>
+                <!-- End Input Card -->
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- End Card -->
 
+        <!--start of comments-->
+<div>
 @include('blog.comments')
-
-<!--comment_box-->
-@guest
-     <div class="login_field" style="margin-top:15px;">Please <a href="{{ route('login') }}">login to </a> send in your comment</div>  
-@else
-<div class="comment_box">
- {!! Form::open(['route'=> 'comments.store', 'class'=>'form', 'method'=>'POST']) !!}
-
-<div class="form-field">
- {!! Form::text('comment', "", [ 'class' => 'form-control', 'style'=>'height:90px;margin-top:15px;border-radius:15px;','placeholder' => Auth::user()->name. ', You can enter some comments here!']) !!}
-
- {!! Form::hidden('post_id', $post->id, [ 'class' => 'form-control input-lg responsive']) !!}
- {!! Form::hidden('commenter_name', Auth::user()->username, [ 'class' => 'form-control input-lg responsive']) !!}
- {!! Form::hidden('author_id', Auth::user()->id, [ 'class' => 'form-control input-lg responsive']) !!}
 </div>
-
-<div class="form-group">
- {!! Form::submit('Comment',['class' => 'btn btn-info btn-lg', 'style' => 'display:block;margin:10px auto 0 auto;width:auto;padding:15px 45px 15px 45px;background-color:red;border:0;border-radius:50px;font-size:13px;width:50%' ]) !!}
-</div>
-
-	 {!! Form::close() !!}
-
-</div>
-	 @endguest
-
-<div class=""><h3>Related Stories</h3></div>
-<div class="row related_stories">
-@foreach($relatedStoryModel as $relStory)
-<div class="rel_story_child">
-<div class="col-md-3 rel_title"><b>{{ucfirst($relStory->category)}}</b><br/><a href="{{route('blog.show',['id'=>$relStory->id])}}"><h4>{{$relStory->post_title}}</h4></a></div>
-<div class="col-md-3 rel_bg" style="background:url( {{ asset( 'img/'.$relStory->post_bg_img) }} ) center center;background-size:cover;background-repeat:no-repeat;width:160px;height:100px;"></div>
-</div>
-@endforeach
-</div>
-
-</div>
+<!--end of comments-->
 
 
+        <div class="row justify-content-sm-between align-items-sm-center mt-5">
+          <div class="col-sm mb-2 mb-sm-0">
+            <div class="d-flex align-items-center">
+              <span class="text-cap mb-0 me-2">Share:</span>
 
+              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
+                <i class="bi-facebook"></i>
+              </a>
+              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
+                <i class="bi-twitter"></i>
+              </a>
+              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
+                <i class="bi-instagram"></i>
+              </a>
+              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
+                <i class="bi-telegram"></i>
+              </a>
+            </div>
+          </div>
+          <!-- End Col -->
 
+          <div class="col-sm-auto">
+            <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#" data-toggle="tooltip" data-placement="top" title="Bookmark story">
+              <i class="bi-bookmark"></i>
+            </a>
+            <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#" data-toggle="tooltip" data-placement="top" title="Report">
+              <i class="bi-flag"></i>
+            </a>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+    </div>
+    <!-- End Page Description -->
+ </main>
+  <!-- ========== END MAIN CONTENT ========== -->
 
-</div>
 
 @endsection
-
-

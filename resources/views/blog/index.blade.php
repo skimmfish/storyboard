@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center mb-3">
                   <div class="flex-shrink-0">
                     <div class="avatar avatar-circle">
-                      <img class="avatar-img" src="{{ asset('img/160x160/img10.jpg')}}" alt="Image Description">
+                      <img class="avatar-img" src="{{ asset('img/160x160/img10.jpg')}}" alt="Post Author">
                     </div>
                   </div>
 
@@ -29,7 +29,7 @@
                 <div class="mb-5">
                   <h2 class="h1 text-white">Front Interview with a Lead Designer of the Hubble</h2>
                 </div>
-                
+
                 <a class="btn btn-primary btn-transition" href="blog-article.html">Read article <i class="bi-chevron-right small ms-1"></i></a>
               </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="mb-5">
                   <h2 class="h1 text-white">Front Corporate - let's work together</h2>
                 </div>
-                
+
                 <a class="btn btn-primary btn-transition" href="blog-article.html">Read article <i class="bi-chevron-right small ms-1"></i></a>
               </div>
             </div>
@@ -84,7 +84,7 @@
                 <div class="mb-5">
                   <h2 class="h1 text-white">How Google Assistant now helps you record stories</h2>
                 </div>
-                
+
                 <a class="btn btn-primary btn-transition" href="blog-article.html">Read article <i class="bi-chevron-right small ms-1"></i></a>
               </div>
             </div>
@@ -147,14 +147,14 @@
         <div class="col-lg-8 mb-10 mb-lg-0">
           <div class="d-grid gap-7 mb-7">
             <!-- Card -->
-			
-			
+
+
 			@foreach($posts as $post)
 
             <div class="card card-flush card-stretched-vertical">
               <div class="row">
                 <div class="col-sm-5">
-                  <img class="card-img" src="{{ asset('img/'.$post->post_bg_img) }}" alt="{{$post->post_title}}">
+                  <img class="card-img" src="{{ asset('img/1920x1080/'.$post->post_bg_img) }}" alt="{{$post->post_title}}" loading="lazy">
                 </div>
                 <!-- End Col -->
 
@@ -168,20 +168,20 @@
                     <h3 class="card-title">
                       <a class="text-dark" href="{{route('blog.show',['id'=>$post->id]) }}">{{ $post->post_title }}</a>
                     </h3>
-                    
+
                     <p class="card-text">{{ $post->description}}</p>
-                    
+
                     <!-- Card Footer -->
                     <div class="card-footer">
                       <div class="d-flex">
                         <div class="flex-shrink-0">
-                          <a class="avatar avatar-circle" href="">
-                            <img class="avatar-img" src="{{ asset('img/'.$userInstance->find($post->author_id)->profile_img) }}" alt="Image Description">
+        <a class="avatar avatar-circle" href="">
+            <img class="avatar-img" src="{{ asset('img/160x160/'.\App\Models\User::find($post->user_id)->profile_img) }}" alt="">
                           </a>
                         </div>
-                      
+
                         <div class="flex-grow-1 ms-3">
-                          <a class="card-link link-dark" href="blog-author-profile.html">{{$post->author}}</a>
+                          <a class="card-link link-dark" href="blog-author-profile.html"></a>
                           <p class="card-text small">{{ date('F d, Y, H:i:s a', strtotime($post->created_at)) }}</p>
                         </div>
                       </div>
@@ -195,7 +195,7 @@
               <!-- End Row -->
             </div>
             <!-- End Card -->
-			
+
 			@endforeach
 
           <!-- Sticky Block End Point -->
@@ -229,7 +229,7 @@
         </div>
         <!-- End Col -->
 </div>
-			
+
         <div class="col-lg-3">
           <div class="mb-7">
             <div class="mb-3">
@@ -367,7 +367,7 @@
                   </div>
                 </a>
                 <!-- End Card -->
-                
+
                 <!-- Card -->
                 <a class="d-block" href="blog-article.html">
                   <div class="d-flex align-items-center">
