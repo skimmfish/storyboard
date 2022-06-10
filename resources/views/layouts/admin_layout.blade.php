@@ -8,18 +8,18 @@
   <!-- Favicon -->
   <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
 
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $description }}" >
-    <meta name="keywords" content="@if($tag) {{$tag}} @else {{$title}} @endif" >
 
-    <title> @if(isset($title)) {{ $title }} @else {{ 'Home' }}	@endif - MyStoryBoard	</title>
+    <title> @if(isset($title)) {{ $title }} @else {{ 'Admin Dashboard' }}	@endif - MyStoryBoard	</title>
 
     <!-- Styles -->
 
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <!-- CSS Implementing Plugins -->
 
   <!-- CSS Implementing Plugins -->
   <link rel="stylesheet" href="{{ asset('css/vendor.min.css') }}">
@@ -31,7 +31,6 @@
 
 <!--custom styling for fonts and other elements-->
 <link rel="stylesheet" href="{{asset('css/custom.css') }}" >
-
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <style>
@@ -43,10 +42,8 @@
   url("{{asset('font/0aee6008b82cde991ec28387169bb13e.ttf') }}") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
   url("{{asset('font/0aee6008b82cde991ec28387169bb13e.svg#GD Sherpa Regular') }}") format("svg"); /* iOS 4.1- */
 }
-
-
 body{
-font-family:'Spartan','GD Sherpa Regular','Brandon Grotesque' !important;font-size:15px;COLOR:#000;
+font-family:'GD Sherpa Regular','Brandon Grotesque' !important;font-size:13.5px;COLOR:#000;
 }
 .form-label, .accordion-body, p{font-size:15px;line-height:34px;font-weight:600;}
 ul>li{line-height:35px;}
@@ -54,7 +51,7 @@ ul>li{line-height:35px;}
 	width:40px;height:40px;border-radius:50%;
 }
 .form-control{font-size:13px;}
-h6{font-size:19px;font-weight:700;font-family:'Spartan','Brandon Grotesque';}
+h6{font-size:19px;font-weight:700;font-family:'GD Sherpa Regular','Spartan','Brandon Grotesque';}
 .mb-0{
 
 	font-family:'Spartan','GD Sherpa Regular','Brandon Grotesque';font-size:20px;line-height:40px;
@@ -62,28 +59,52 @@ h6{font-size:19px;font-weight:700;font-family:'Spartan','Brandon Grotesque';}
 }
 </style>
 
-<script type="text/javascript">
-function closeDiv(div){
-var divX = document.getElementById(div);
-divX.style.display = "none";
-}
+<!--modals loader-->
+<script>
+        // display a modal (small modal)
+        $(document).on('click', '#smallButton', function(event) {
+            event.preventDefault();
+            let href = $(this).attr('data-attr');
+            $.ajax({
+                url: href,
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                // return the result
+                success: function(result) {
+                    $('#postModal').modal("show");
+                    $('#smallBody').html(result).show();
+                },
+                complete: function() {
+                    $('#loader').hide();
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    alert("Page " + href + " cannot open. Error:" + error);
+                    $('#loader').hide();
+                },
+                timeout: 8000
+            })
+        });
 </script>
-
-<script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script>
 
 </head>
 <body>
+
+
   <!-- ========== HEADER ========== -->
   <header id="header" class="navbar navbar-expand-lg navbar-end navbar-absolute-top navbar-light navbar-show-hide"
           data-hs-header-options='{
             "fixMoment": 1000,
             "fixEffect": "slide"
           }'>
+
+
     <div class="container">
       <nav class="js-mega-menu navbar-nav-wrap">
         <!-- Default Logo -->
-        <a class="navbar-brand" href="{{ config('app_url') }}" aria-label="{{ config('app_name') }}" style="font-family:Chiller;font-size:32px;">
-    StoryBoard
+        <a class="navbar-brand" href="{{ route('blog.index') }}" aria-label="{{ config('app_name') }}" style="font-family:Chiller;font-size:35px;color:#000">
+          StoryBoard
     </a>
         <!-- End Default Logo -->
 
@@ -110,7 +131,8 @@ divX.style.display = "none";
                 <div class="hs-mega-menu" aria-labelledby="landingsMegaMenu" style="min-width: 30rem;">
                   <div class="row">
                     <div class="col-lg-6 d-none d-lg-block">
-                      </div>
+
+                    </div>
                     <!-- End Col -->
 
                     <div class="col-lg-6">
@@ -126,41 +148,25 @@ divX.style.display = "none";
 
               <!-- Company -->
               <li class="hs-has-sub-menu nav-item">
-                <a id="companyMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle " href="#" role="button" aria-expanded="false">About Us</a>
+                <a id="companyMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle " href="{{route('admin.dashboard.home')}}" role="button" aria-expanded="false">Dashboard</a>
 
                 <!-- Mega Menu -->
                 <div class="hs-sub-menu dropdown-menu" aria-labelledby="companyMegaMenu" style="min-width: 14rem;">
-                  <a class="dropdown-item " href="{{route('about-us') }}">About MyStoryBoard</a>
-                  <a class="dropdown-item " href="{{ route('privacy-policy') }}">Privacy Policy</a>
-                  <a class="dropdown-item " href="{{ route('terms-and-conditions') }}">Terms & Conditions</a>
-                  <a class="dropdown-item " href="{{route('contact-us') }}">Contact Us</a>
+                <a class="dropdown-item " href="{{route('admin.dashboard.home') }}">All Posts</a>
+                <a class="dropdown-item " href="{{route('admin.dashboard.newpost') }}">New Post</a>
+                  <a class="dropdown-item " href="{{ route('admin.dashboard.new-ebook') }}">Upload new e-Book</a>
+                  <a class="dropdown-item " href="{{ route('admin.dashboard.users') }}">Users</a>
+                  <a class="dropdown-item " href="{{ route('admin.dashboard.ads') }}">Ads & Impressions</a>
+                  <a class="dropdown-item " href="{{ route('logout') }}">Logout</a>
+
                 </div>
                 <!-- End Mega Menu -->
               </li>
               <!-- End Company -->
-
-              <!-- Blog -->
-              <li class="hs-has-sub-menu nav-item">
-                <a id="blogMegaMenu" class="hs-mega-menu-invoker nav-link" href="{{route('admin.dashboard.new-ebook')}}" role="button" aria-expanded="false">e-Books</a>
-
-                <!-- Mega Menu -->
-                <div class="hs-sub-menu" aria-labelledby="blogMegaMenu" style="min-width: 14rem;">
-
-                </div>
-                <!-- End Mega Menu -->
-              </li>
-
-              <li class="hs-has-sub-menu nav-item">
-                <a id="blogMegaMenu" class="hs-mega-menu-invoker nav-link" href="{{route('admin.dashboard.newpost')}}" role="button" aria-expanded="false">Start Writing</a>
-
-                <!-- Mega Menu -->
-                <div class="hs-sub-menu" aria-labelledby="blogMegaMenu" style="min-width: 14rem;">
-                </div>
-                <!-- End Mega Menu -->
-              </li>
-
               <!-- Button -->
               <li class="nav-item">
+
+
 				@if(Auth::check())
 						@if(Auth::user()->is_admin==true)
 					<a href="{{ route('admin.dashboard.home') }}"><img src="{{asset('img/160x160/'.Auth::user()->profile_img) }}" alt="{{Auth::user()->username}}" class="img_circle"/></a>
@@ -182,10 +188,18 @@ divX.style.display = "none";
       </nav>
     </div>
   </header>
+
   <!-- ========== END HEADER ========== -->
+
    <!-- ========== END HEADER ========== -->
+
        @yield('content')
-        @include('layouts.footer')
+
+
+@include('layouts.footer')
+
+
+
 
   <!-- Go To -->
   <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
@@ -206,7 +220,9 @@ divX.style.display = "none";
     <i class="bi-chevron-up"></i>
   </a>
   <!-- ========== END SECONDARY CONTENTS ========== -->
-<!--JS Implementing Plugins -->
+
+
+  <!-- JS Implementing Plugins -->
   <script src="{{ asset('js/vendor.min.js') }}"></script>
   <script src="{{ asset('vendor/aos/dist/aos.js') }}"></script>
 
@@ -219,16 +235,22 @@ divX.style.display = "none";
       // INITIALIZATION OF HEADER
       // =======================================================
       new HSHeader('#header').init()
-        // INITIALIZATION OF MEGA MENU
+
+
+      // INITIALIZATION OF MEGA MENU
       // =======================================================
       new HSMegaMenu('.js-mega-menu', {
           desktop: {
             position: 'left'
           }
         })
+
+
       // INITIALIZATION OF SHOW ANIMATIONS
       // =======================================================
       new HSShowAnimation('.js-animation-link')
+
+
       // INITIALIZATION OF BOOTSTRAP VALIDATION
       // =======================================================
       HSBsValidation.init('.js-validate', {
@@ -237,24 +259,38 @@ divX.style.display = "none";
           alert('Submited')
         }
       })
+
+
       // INITIALIZATION OF BOOTSTRAP DROPDOWN
       // =======================================================
       HSBsDropdown.init()
+
+
       // INITIALIZATION OF GO TO
       // =======================================================
       new HSGoTo('.js-go-to')
+
+
       // INITIALIZATION OF AOS
       // =======================================================
       AOS.init({
         duration: 650,
         once: true
       });
+
+
       // INITIALIZATION OF TEXT ANIMATION (TYPING)
       // =======================================================
       HSCore.components.HSTyped.init('.js-typedjs')
     })()
   </script>
+
+
+
+
 <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
 </body>
 </html>
+

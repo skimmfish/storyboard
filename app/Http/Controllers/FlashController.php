@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class FlashController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,19 +13,45 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return view('flashMessageList');
     }
 
-    /**
-     * Show the form for creating a new resource.
+     /**
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function success()
     {
-        //
+        return back()->with('success','Flash message success!');
     }
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function info()
+    {
+        return back()->with('info','Flash message info!');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function warning()
+    {
+        return back()->with('warning','Flash message warning!');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function error()
+    {
+        return back()->with('error','Flash message error!');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -35,18 +61,6 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
-        $validation = $request->validate([
-            'comment'=>'required | min:2| max:400'
-        ]);
-
-        $newComment = new \App\Models\Comment;
-        $newComment->comment = $request->comment;
-        $newComment->pub_status=1;
-        $newComment->post_id = $request->post_id;
-        $newComment->author_id = $request->author_id;
-
-        $newComment->save();
-        return redirect()->route('blog.show',['id'=>$request->post_id]);
     }
 
     /**
@@ -57,7 +71,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-    return $post = \App\Models\Comment::find($id);
+        //
     }
 
     /**
@@ -91,8 +105,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-    $post = \App\Models\Comment::find($id);
-    //softdeleting the post
-    $post->delete();
+        //
     }
 }

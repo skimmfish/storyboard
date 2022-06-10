@@ -22,28 +22,26 @@
           </a>
         </div>
       </div>
-<div class="col-sm-4 col-md-3 mb-3 mb-sm-0">
+<div class="col-sm-5 col-md-4 mb-4 mb-sm-0">
         <!-- List -->
         <ul class="list-unstyled list-py-1">
 		<li><b>Home</b></li>
-          <li><a class="text-body" href="">Story Board</a></li>
+          <li><a class="text-body" href="{{ route('blog.index') }}">Story Board</a></li>
           <li><a class="text-body" href="{{ route('about-us') }}">About Story Board</a></li>
-          <li><a class="text-body" href="">Road Map</a></li>
-          <li><a class="text-body" href="">Terms & Conditions</a></li>
+          <li><a class="text-body" href="">Contact Us</a></li>
         </ul>
         <!-- End List -->
       </div>
 
+      <!--
       <div class="col-sm-4 col-md-3 mb-3 mb-sm-0">
-        <!-- List -->
         <ul class="list-unstyled list-py-1">
           <li><b>Investors</b></li>
           <li><a class="text-body" href="">Investor Relations</a></li>
-</ul>
-        <!-- End List -->
-      </div>
-
-      <div class="col-sm-4 col-md-3 mb-3 mb-sm-0">
+            </ul>
+        </div>
+-->
+      <div class="col-sm-5 col-md-4 mb-4 mb-sm-0">
         <!-- List -->
         <ul class="list-unstyled list-py-1">
 			<li>	<b>Help</b></li>
@@ -73,10 +71,6 @@
             </a>
           </li>
         <li>
-            <a class="text-body" href="" target="_blank">
-              Contact Us
-              <i class="bi-box-arrow-up-right small ms-1"></i>
-            </a>
           </li>
         </ul>
         <!-- End List -->
@@ -87,7 +81,7 @@
 
     <div class="row align-items-sm-center">
       <div class="col-sm mb-4 mb-sm-0">
-        <p class="small">&copy; {{ config('app_name') }} . {{date('Y')}} . All rights reserved.</p>
+        <p class="small">&copy; MyStoryBoard . {{date('Y')}} . All rights reserved.</p>
       </div>
       <!-- End Col -->
 
@@ -196,7 +190,7 @@
                  data-hs-show-animation-options='{
                        "targetSelector": "#signupModalFormLoginWithEmail",
                        "groupName": "idForm"
-                     }'>Log in with Username</a>
+                     }'>Log in with E-mail</a>
             </div>
           </div>
           <!-- End Log in -->

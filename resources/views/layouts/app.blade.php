@@ -102,8 +102,7 @@ ul>li{line-height:35px;}
     <div class="container">
       <nav class="js-mega-menu navbar-nav-wrap">
         <!-- Default Logo -->
-        <a class="navbar-brand" href="" aria-label="Front">
-        <!--  <img class="navbar-brand-logo" src="{{ asset('svg/logos/logo-white.svg') }}" alt="Logo">-->
+        <a class="navbar-brand" href="{{route('blog.index')}}" aria-label="StoryBoard" style="font-family:Chiller;font-size:30px;color:#0099cc">StoryBoard
 
 			</a>
         <!-- End Default Logo -->
@@ -190,10 +189,10 @@ ul>li{line-height:35px;}
 
 				@if(Auth::check())
 						@if(Auth::user()->is_admin==true)
-<a href="{{ route('admin.dashboard.index') }}">
+<a href="{{ route('admin.dashboard.home') }}">
 <img src="@if(Auth::user()->profile_img) {{asset('img/160x160/'.Auth::user()->profile_img) }} @else {{ asset('img/160x160/img1.jpg') }} @endif" alt="{{ Auth::user()->username }}" class="img_circle"/></a>
 				@else
-<a href="{{ route('admin.dashboard.index') }}"><img src="@if(Auth::user()->profile_img) {{asset('img/160x160/'.Auth::user()->profile_img) }} @else {{ asset('img/160x160/img1.jpg') }} @endif" alt="{{Auth::user()->username}}" class="img_circle"/></a>
+<a href="{{ route('admin.dashboard.home') }}"><img src="@if(Auth::user()->profile_img) {{asset('img/160x160/'.Auth::user()->profile_img) }} @else {{ asset('img/160x160/img1.jpg') }} @endif" alt="{{Auth::user()->username}}" class="img_circle"/></a>
 								@endif
 								@else
 					<a class="btn btn-light btn-transition" href="#" data-bs-toggle="modal" data-bs-target="#signupModal" style="border-radius:7px;font-weight:700;">Get Started <i class="bi-chevron-right small ms-1" style="color:#000000;"></i></a>

@@ -27,6 +27,7 @@ return $request->user();
 
 });
 
+Route::get('404',function(){return view('errors.404',['title'=>'Page not found']); })->name('errors.404');
 
 //signup route
 /*
@@ -101,6 +102,9 @@ Route::get('genre', function(){
 	return view('genre')->with('title','Story Genre - My Story Board');
 });
 
+//for getting posts based on tags
+Route::get('tags/{tag}',function($tag){})->name('blog.tags');
+
 //new story
 Route::post('contents/store', '\App\Http\Controllers\ContentController@store')->name('contents.store');
 
@@ -109,7 +113,15 @@ Auth::routes(['verify'=>true]);
 //Route::post('emailsubscription','\App\Http\Controllers\EmailSubscriptionController@store')->name('emailsubscription');
 
 Route::post('emailsubscription','\App\Http\Controllers\EmailSubscriptionController@store')->name('emailsubscription');
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//author's profile
+Route::get('author/{id}',function($id){
+    $allposts = \App\Models\Content::where(['user_id'=>$id])->orderBy('created_at','DESC')->get();
+    //fetching the user's name
+    $user = \App\Models\Users::find($id)->name;
+    return view('blog.author_posts')->with(['pagetitle'=>"Stories written by $user",'allposts'=>$allposts,'title'=>"Stories written by $user",'id'=>$id]);
+})->name('blog.author_posts');
 
 /*------------------
 ================================
@@ -117,20 +129,95 @@ Authenticated endpoints
 =================================
 */
 
-Route::middleware(['auth'])->prefix('dashboard')->group(function(){
+//redirecting to the dashboard
+Route::get('home',function(){
+    return redirect()->route('admin.dashboard.home')->with(['title'=>"Admin's Dashboard"]);
+})->name('admin.dashboard.home')->middleware(['auth','admin']);
 
-    Route::get('admin',function(){})->name('admin.dashboard.index');
+//grouped routes for the admin's dashboard
+Route::middleware(['auth','admin','verified'])->prefix('dashboard')->group(function(){
 
+    Route::post('savepost','\App\Http\Controllers\ContentController@store')->name('admin.dashboard.savepost');
+
+    //dashboard home
+    Route::get('/',function(){
+        $posts = \App\Models\Content::where(['deleted_at'=>NULL])->paginate(15);
+        return view('admin.dashboard.home',['title'=>"Admin's Dashboard",'allposts'=>$posts,'id'=>1]);
+    })->name('admin.dashboard.home');
+
+    //updating the pub_status of a post
+    Route::get('update_status/{id}/{pub_status}','\App\Http\Controllers\ContentController@pubupdate')->name('blog.pub_status');
+
+    //for confirming if a post should be deleted
+    Route::get('delete_confirm/{id}',function($id){
+        return view('admin.dashboard.delete_confirm',['id'=>$id]);
+    })->name('admin.dashboard.delete_confirm');
+
+    //route for confirming if a use should be deleted
+    Route::get('delete_user_confirm/{id}',function($id){
+        return view('admin.dashboard.delete_user_confirm',['id'=>$id]);
+    })->name('admin.dashboard.delete_user_confirm');
+
+    //deleting a user
+    Route::get('delete_user','\App\Http\Controllers\UserController@delete')->name('admin.dashboard.delete_user');
+
+    //deleting a post
+    Route::delete('delete_post/{id}','\App\Http\Controllers\ContentController@delete')->middleware('auth')->name('admin.dashboard.delete_post');
+
+    //view for modifying posts
+    Route::get('edit-post/{id}',function($id){
+        $singlePost = \App\Models\Content::where(['id'=>$id])->get();
+        return view('admin.dashboard.edit-post')->with(['title'=>'Modifying Post','id'=>$id,'singlePost'=>$singlePost]);
+    })->name('admin.dashboard.edit-post');
+
+    //Editting a post via this route
+    Route::put('edit/{id}','App\Http\Controllers\ContentController@edit')->name('admin.dashboard.edit_post');
+
+    //Sort posts by category
+    Route::get('sort_by_category/{cat}',function($cat){
+        $allposts = \App\Models\Content::where(['category'=>$cat])->orderBy('category','DESC')->paginate(10);
+        return view('admin.dashboard.home')->with(['allposts'=>$allposts,'cats'=>'catpage','pagetitle'=>'Sorting Posts by'.$cat, 'title'=>'Sorting Posts by category'.$cat,'id'=>1]);
+    })->name('admin.dashboard.sort_by_category');
+
+	//for creating new post
+	Route::get('new-post',function(){
+		return view('admin.dashboard.newpost')->with('title','New Article');
+	})->name('admin.dashboard.newpost');
+
+    Route::get('new-post/ebooks',function(){
+        return view('admin.dashboard.new-ebook',['title'=>'New e-Book']);
+    })->name('admin.dashboard.new-ebook');
+
+    //all ads for the site
+    Route::get('ads',function(){
+
+    })->name('admin.dashboard.ads');
+
+    //all users
+    Route::get('users','\App\Http\Controllers\UserController@index')->name('admin.dashboard.users');
+
+    Route::get('userinfo/{id}','\App\Http\Controllers\UserController@fetchUser')->name('admin.dashboard.userinfo');
+
+    //for editing users
+    Route::get('edit-user/{id}',function($id){
+        return view('admin.dashboard.edit_user',['id'=>$id])->with('title',"Modifying User's Profile");
+    })->name('edit_user');
+    //end of the dashboard route group
 });
 
-Route::get('author/{id}',function($id){})->name('author.storyprofile');
-
 //saving new comment
-Route::post('savecomment','\App\Http\Controllers\CommentController@store')->name('comments.store');
+Route::post('savecomment','\App\Http\Controllers\CommentController@store')->middleware(['auth','verified'])->name('comments.store');
 
 //authenticated route to post comments
-Route::get('loginpost',function(){})->name('loginpost')->middleware('auth');
+Route::get('loginpost/{postid}',function($postid){
 
-//Route::get('login',function(){})->name('login.postcomment');
+    return redirect()->route('blog.show',['id'=>$postid]);
+
+})->name('loginpost')->middleware(['auth','verified']);
+
+Route::get('logout',function(){
+    Auth::logout();
+    return redirect()->route('blog.index');
+})->name('logout');
 
 ?>

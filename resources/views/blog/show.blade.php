@@ -7,7 +7,7 @@
     <div class="container content-space-t-3 content-space-t-lg-4 content-space-b-2">
       <div class="w-lg-65 mx-lg-auto">
         <div class="mb-4">
-        <h1 class="h2 center text-lg text-xs gd" style="text-transform:Capitalize;">{{$post->post_title}}</h1>
+        <h1 class="h2 center text-lg text-lg gd" style="text-transform:Capitalize;">{{$post->post_title}}</h1>
 
     </div>
 
@@ -22,7 +22,7 @@
 
               <div class="flex-grow-1 ms-3">
                 <h5 class="mb-0">
-                  <a class="text-dark text-sm" href="{{route('author.storyprofile',['id'=>$post->user_id])}}">{{\App\Models\User::find($post->user_id)->name}}</a>
+                  <a class="text-dark text-sm" href="{{route('blog.author_posts',['id'=>$post->user_id])}}">{{\App\Models\User::find($post->user_id)->name}}</a>
                 </h5>
                 <span class="d-block small">1 day ago</span>
               </div>
@@ -36,12 +36,12 @@
               <span class="text-cap mb-0 me-2 text-sm" style="font-size:11px"><small>Follow Us</small></span>
 
               <div class="d-flex gap-2">
-                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
+                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="">
                   <i class="bi-facebook"></i>
                 </a>
-                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
-                  <i class="bi-twitter"></i>
-                </a>
+                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="https://twitter.com/courseunit42?ref_src=twsrc%5Etfw" data-show-count="false"><i class="bi-twitter"></i></a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
                 <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
                   <i class="bi-instagram"></i>
                 </a>
@@ -55,17 +55,17 @@
         </div>
         <!-- End Row -->
 
-<div class="floating_widget">
-<div class="share-box close-btn">x</div>
+<div class="floating_widget" id="floating_widget">
+<a href="#" onClick="closeDiv('floating_widget')"><p class="share-box close-btn">x</p></a>
 
 <!--facebook-->
-<div class="share-box" style="border:0"><i class="bi-facebook"></i></div>
+<div class="share-box" style="border:0"><a href="https://web.facebook.com/sharer/sharer.php?u={{URL::current()}}"><i class="bi-facebook"></i></a></div>
 <!--twitter-->
-<div class="share-box" style="border:0"><i class="bi-twitter"></i></div>
+<div class="share-box" style="border:0"><a href='https://twitter.com/share' data-show-count='false' data-via='courseunit42'><i class="bi-twitter"></i></a></div>
 <!--twitter-->
-<div class="share-box" style="border:0"><i class="bi-instagram"></i></div>
+<div class="share-box" style="border:0"><a href=""><i class="bi-instagram"></i></a></div>
 <div class="share-box" style="border:0;margin-left:-12px;margin-top:-8px;"><div class="count_box">{{ $claps }}</div>
-<img src="{{asset('img/icons/clap2.png')}}" class="share-brand" style="width:68px;height:68px;" loading="lazy"/></div>
+<a href="#" onClick="addClap({{$post->id}})" role="button"><img src="{{asset('img/icons/clap2.png')}}" class="share-brand" style="width:68px;height:68px;" loading="lazy"/></a></div>
 
 </div>
 
@@ -81,7 +81,7 @@
 
         <!-- Blockquote -->
         <figure class="bg-light text-center p-7 my-7">
-          <blockquote class="blockquote blockquote-lg family-font text-md">We support humanity, we give back to the needy You may contribute your quota by <a href="https://paypal.me/eolabiyi">dropping your widow's mite here <img src="{{asset('img/icons/tea-cup.jpg') }}" class="img-responsive img-circled" alt="Tea cup" loading="lazy"></img></a> </blockquote>
+          <blockquote class="blockquote blockquote-lg family-font text-md">We support humanity, we give back to the needy You may contribute your quota by <a href="https://paypal.me/stacymal?country.x=LS&locale.x=en_US">dropping your widow's mite here <img src="{{asset('img/icons/tea-cup.jpg') }}" class="img-responsive img-circled" alt="Tea cup" loading="lazy"></img></a> </blockquote>
           <!--
           <figcaption class="blockquote-footer">
             Emmanuel
@@ -129,18 +129,17 @@
             <div class="d-flex align-items-center">
               <span class="text-cap mb-0 me-2">Share:</span>
 
-              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
+              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="https://web.facebook.com/sharer/sharer.php?u={{URL::current()}}">
+
                 <i class="bi-facebook"></i>
               </a>
-              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
+              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href='https://twitter.com/share' class='twitter-share-button' data-show-count='false' data-via='courseunit42'>
                 <i class="bi-twitter"></i>
               </a>
-              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
+              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="https://instagram.com/palmstoryboard">
                 <i class="bi-instagram"></i>
               </a>
-              <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="#">
-                <i class="bi-telegram"></i>
-              </a>
+              
             </div>
           </div>
           <!-- End Col -->

@@ -13,9 +13,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+    $users = \App\Models\User::paginate(10);
+    return view('admin.dashboard.users')->with(['title'=>'All Users','users'=>$users, 'id'=>1]);
     }
 
+    /*
+    * Show the user specified by the id
+    *@return Object <User>
+    */
+    public function fetchUser($id){
+        $user = \App\Models\User::where('id',$id)->get();
+        return view('admin.dashboard.userinfo')->with(['userinfo'=>$user]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -79,6 +88,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $u = User::find($id);
+        $u->delete();
+
+        //redirecting the user
+        return redirect()->route('admin.dashboard.users',['success'=>'User deleted successfully']);
     }
 }
