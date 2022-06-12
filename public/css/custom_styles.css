@@ -40,13 +40,13 @@ font-family:'GD Sherpa Regular', 'Spartan','Brandon Grotesque','Work Sans';font-
 }
 
 .small-xs{font-size:10px;font-weight:500;}
+
+.label{
+	font-weight:500 !important;
+}
 /**
 *Mobile and Ipad/tablets size
 ***/
 @media(max-width:425px){
-
-
-
-
 
 }

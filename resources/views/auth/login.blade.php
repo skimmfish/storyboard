@@ -11,8 +11,8 @@
         <div class="flex-grow-1 p-5">
             <!-- Blockquote -->
             <figure class="text-center">
-              <div class="mb-4">
-                <img class="avatar avatar-xl avatar-4x3" src="" alt="Logo">
+              <div class="mb-4" style="font-family:Chiller;font-size:26px;color:#ffffff;">
+                StoryBoard
               </div>
 
               <blockquote class="blockquote blockquote-light">“Fresh Stories Untold”</blockquote>
@@ -71,13 +71,13 @@
             <!-- End Heading -->
 
             <!-- Form -->
-            <form class="" method="POST" action="{{ route('login') }}" >
+            <form method="POST" action="{{ route('login') }}" >
 			{{ csrf_field() }}
 
               <!-- Form -->
-              <div class="mb-4 form-group{{ $errors->has('email') ? ' has-error' : '' }}"">
+              <div class="mb-4 form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                 <label class="form-label" for="signupModalFormLoginUsername">Your email</label>
-                <input type="text" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" id="signupModalFormLoginUsername" placeholder="E-mail Address" value="{{ old('email') }}" aria-label="Email" required />
+                <input type="text" class="form-control form-control-xl @error('email') is-invalid @enderror" name="email" id="signupModalFormLoginUsername" placeholder="E-mail Address" value="{{ old('email') }}" aria-label="Email" style="width:100%;" required />
                 <span class="invalid-feedback">Please enter your email<br/>
 
 

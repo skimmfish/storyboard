@@ -15,8 +15,6 @@
     <title> @if(isset($title)) {{ $title }} @else {{ 'Admin Dashboard' }}	@endif - MyStoryBoard	</title>
 
     <!-- Styles -->
-
-
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <!-- CSS Implementing Plugins -->
@@ -45,7 +43,7 @@
 body{
 font-family:'GD Sherpa Regular','Brandon Grotesque' !important;font-size:13.5px;COLOR:#000;
 }
-.form-label, .accordion-body, p{font-size:15px;line-height:34px;font-weight:600;}
+.form-label, .accordion-body, p{font-size:15px;line-height:34px;font-weight:500;}
 ul>li{line-height:35px;}
 .img_circle{
 	width:40px;height:40px;border-radius:50%;

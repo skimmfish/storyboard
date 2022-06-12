@@ -37,13 +37,14 @@
 }
 
 body{
-font-family:'GD Sherpa Regular','Spartan','Brandon Grotesque' !important;	color:#000;font-weight:600;font-size:13px;
+font-family:'GD Sherpa Regular','Spartan','Brandon Grotesque' !important;	color:#000;font-weight:500;font-size:13px;
 }
 
-h1,h2,h3,h4,h5,h6{font-family:GD Sherpa;font-weight:800;}
+h1,h2,h3,h4,h5,h6{font-family:GD Sherpa;font-weight:600;}
 .shrink_form_control{
-	height:30px !important;
+	height:35px !important;
 }
+.form-control{font-family:GD Sherpa Regular;}
 
 
 </style>

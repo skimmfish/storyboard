@@ -24,7 +24,7 @@
                 <h5 class="mb-0">
                   <a class="text-dark text-sm" href="{{route('blog.author_posts',['id'=>$post->user_id])}}">{{\App\Models\User::find($post->user_id)->name}}</a>
                 </h5>
-                <span class="d-block small">1 day ago</span>
+                <span class="d-block small">{{ $posted_days_ago }}</span>
               </div>
             </div>
             <!-- End Media -->
@@ -42,10 +42,7 @@
                 <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="https://twitter.com/courseunit42?ref_src=twsrc%5Etfw" data-show-count="false"><i class="bi-twitter"></i></a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
-                  <i class="bi-instagram"></i>
-                </a>
-                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="#">
+                <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="https://t.me/share/url?url={{ URL::current() }}&text={{$post->description}}">
                   <i class="bi-telegram"></i>
                 </a>
               </div>
@@ -63,7 +60,6 @@
 <!--twitter-->
 <div class="share-box" style="border:0"><a href='https://twitter.com/share' data-show-count='false' data-via='courseunit42'><i class="bi-twitter"></i></a></div>
 <!--twitter-->
-<div class="share-box" style="border:0"><a href=""><i class="bi-instagram"></i></a></div>
 <div class="share-box" style="border:0;margin-left:-12px;margin-top:-8px;"><div class="count_box">{{ $claps }}</div>
 <a href="#" onClick="addClap({{$post->id}})" role="button"><img src="{{asset('img/icons/clap2.png')}}" class="share-brand" style="width:68px;height:68px;" loading="lazy"/></a></div>
 

@@ -8,7 +8,7 @@
  {!! Form::open(['route'=> 'comments.store', 'class'=>'form', 'method'=>'POST']) !!}
 
 <div class="form-field">
- {!! Form::text('comment', "", [ 'class' => 'form-control', 'style'=>'height:90px;margin-top:15px;border-radius:15px;font-weight:400;height:80px;border:1px solid #cfcfcf','placeholder' => Auth::user()->name. ', You can enter some comments here!']) !!}
+ {!! Form::text('comment', "", [ 'class' => 'form-control', 'style'=>'height:90px;margin-top:15px;border-radius:15px;font-weight:400;height:80px;border:1px solid #bfbfbf;width:100%','placeholder' => Auth::user()->name. ', You can enter some comments here!']) !!}
 
  {!! Form::hidden('post_id', $post->id, [ 'class' => 'form-control input-lg responsive']) !!}
  {!! Form::hidden('author_id', Auth::user()->id, [ 'class' => 'form-control input-lg responsive']) !!}

@@ -11,6 +11,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Thunder\Shortcode\ShortcodeFacade;
 use Thunder\Shortcode\Shortcode\ShortcodeInterface;
 use DB;
+use Carbon\Carbon;
 
 class ContentController extends Controller
 {
@@ -81,7 +82,8 @@ return $tags = \App\Models\TagManager::all();
 		'post_body'=>'required',
         'category'=>'required',
         'ads_selected'=>'required',
-        'tags'=>'required'
+        'tags'=>'required',
+        'post_bg_img' => 'required|mimes:png,jpg,jpeg,svg|max:2048',
 		];
 
 		$messages = [
@@ -100,21 +102,23 @@ return $tags = \App\Models\TagManager::all();
 		$content->category = $request->category;
         $content->ads_selected = $request->ads_selected;
         $content->tags = $request->tags;
-        $content->post_bg_img = $request->file('post_bg_img');
+        $content->post_bg_img = $this->saveFile($request,'post_bg_img','img/1920x1080');
         $content->post_banner_one = '';
         $content->post_banner_two = '';
         $content->save();
 
-        return redirect()->route('admin.dashboard.home')->with('success','New story post has been created successfully');
-    }
+        return redirect()->route('admin.dashboard.home')->with('success','New story has been created successfully');
+}
+
 
 /*
 *@param $FILE object
-*
+*@return String <$bgFile>
 */
-public function saveFile(Request $request, Content $content){
-$bgFile = $request->file('post_bg_img');
-
+public function saveFile(Request $request,$formFieldHandler,$location){
+$fileName = time().'.'.$request->$formFieldHandler->extension();  
+     $request->$formFieldHandler->move(public_path($location), $fileName);
+     return $fileName;
 }
 
 
@@ -168,8 +172,7 @@ $user = User::where('api_token', $request->get('api_token'))->first();
 
 
 		$related = $this->relatedStories($singlePost->category);
-		return view('blog.show',['post'=>$singlePost,'comments'=>$comments,'userModel'=>$user,'title'=>$singlePost->post_title, 'relatedStoryModel'=>$related,'claps'=>$clap_count,
-        'tag'=>$singlePost->tags,'description'=>$description
+		return view('blog.show',['post'=>$singlePost,'comments'=>$comments,'userModel'=>$user,'title'=>$singlePost->post_title, 'relatedStoryModel'=>$related,'claps'=>$clap_count,'tag'=>$singlePost->tags,'description'=>$description, 'posted_days_ago'=>\Carbon\Carbon::parse($singlePost->created_at)->diffForHumans()
     ]);
 }
 
@@ -202,37 +205,6 @@ return $fieldValue;
      */
     public function edit($id)
     {
-    $post = \App\Models\Content::where('id',$id)->get();
-    $request = new Request;
-    $post->post_body = $request->post_body;
-    $post->post_title = $request->post_title;
-    $post->description = $request->description;
-    $post->ads_selected = $request->ads_selected;
-
-    $rules = [
-		'post_title'=>'required|max:140',
-		'description'=>'required',
-		'post_body'=>'required',
-        'ads_selected' => 'required'
-		];
-
-		$messages = [
-		'description'=>'A befitting description is very important here',
-		'required'=>'This field is required'
-		];
-
-        $validate = $request->validate($rules);
-
-    //saving the updated info to the db table
-
-    $post->save($request->all());
-
-    $post->save();
-    $_SESSION['message']="Post modified successfully!";
-
-    //redirecting to
-//    return redirect()->route('admin.dashboard.home');
-
     }
 
 
@@ -273,7 +245,39 @@ return $related;
      */
 public function update(Request $request, $id)
 {
-//
+    $post = \App\Models\Content::find($id);
+    
+    $rules = [
+		'post_title'=>'required|max:140',
+		'description'=>'required',
+		'post_body'=>'required',
+        'ads_selected' => 'required',
+        'tags'=>'required',
+        'category'=>'required',
+        'post_bg_img' => 'required|mimes:png,jpg,jpeg,svg|max:2048',
+
+		];
+
+		$messages = [
+		'description'=>'A befitting description is very important here',
+		'required'=>'This field is required'
+		];
+
+        $validate = $request->validate($rules);
+
+        $post->post_body = $request->post_body;
+        $post->post_title = $request->post_title;
+        $post->description = $request->description;
+        $post->ads_selected = $request->ads_selected;
+        $post->category = $request->category;
+        $post->tags = $request->tags;
+        $post->post_bg_img = $this->saveFile($request,'post_bg_img','img/1920x1080');
+    
+    //saving the updated info to the db table
+    $post->save($request->all());
+
+    //redirecting to
+    return redirect()->back()->with('success','Story updated successfully');
 }
 
     /**

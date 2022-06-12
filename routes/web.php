@@ -171,7 +171,7 @@ Route::middleware(['auth','admin','verified'])->prefix('dashboard')->group(funct
     })->name('admin.dashboard.edit-post');
 
     //Editting a post via this route
-    Route::put('edit/{id}','App\Http\Controllers\ContentController@edit')->name('admin.dashboard.edit_post');
+    Route::put('edit/{id}','App\Http\Controllers\ContentController@update')->name('admin.dashboard.edit_post');
 
     //Sort posts by category
     Route::get('sort_by_category/{cat}',function($cat){
