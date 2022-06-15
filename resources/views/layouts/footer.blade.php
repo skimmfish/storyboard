@@ -28,7 +28,7 @@
 		<li><b>Home</b></li>
           <li><a class="text-body" href="{{ route('blog.index') }}">Story Board</a></li>
           <li><a class="text-body" href="{{ route('about-us') }}">About Story Board</a></li>
-          <li><a class="text-body" href="">Contact Us</a></li>
+          <li><a class="text-body" href="{{route('contact-us')}}">Contact Us</a></li>
         </ul>
         <!-- End List -->
       </div>

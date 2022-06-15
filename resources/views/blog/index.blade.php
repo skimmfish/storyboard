@@ -44,44 +44,10 @@
         </div>
 
         <!-- Swiper Pagination -->
-        <div class="js-swiper-blog-journal-hero-pagination swiper-pagination swiper-pagination-light swiper-pagination-vertical swiper-pagination-middle-y-end me-3 d-lg-none"></div>
       </div>
       <!-- End Swiper Main Slider -->
 
-      <!-- Swiper Thumbs Slider -->
-      <div class="d-none d-lg-block container translate-middle-y position-absolute top-50 start-0 end-0 zi-2">
-        <div class="translate-middle-y position-absolute top-50 end-0">
-          <div class="js-swiper-blog-journal-hero-thumbs swiper" style="opacity:0;max-width: 13rem;">
-            <div class="swiper-wrapper">
-              <!-- Slide -->
-              <div class="swiper-slide swiper-pagination-progress swiper-pagination-progress-light py-3">
-                <p class="text-white">Front Interview with a Lead Designer of the Hubble</p>
 
-                <div class="swiper-pagination-progress-body">
-                  <div class="js-swiper-pagination-progress-body-helper swiper-pagination-progress-body-helper"></div>
-                </div>
-              </div>
-              <!-- End Slide -->
-
-              <!-- Slide -->
-              <div class="swiper-slide swiper-pagination-progress swiper-pagination-progress-light py-3">
-                <p class="text-white">Front Corporate - let's work together</p>
-
-                <div class="swiper-pagination-progress-body">
-                  <div class="js-swiper-pagination-progress-body-helper swiper-pagination-progress-body-helper"></div>
-                </div>
-              </div>
-              <!-- End Slide -->
-
-              <!-- Slide -->
-              <div class="swiper-slide swiper-pagination-progress swiper-pagination-progress-light py-3">
-                <p class="text-white">How Google Assistant now helps you record stories</p>
-
-                <div class="swiper-pagination-progress-body">
-                  <div class="js-swiper-pagination-progress-body-helper swiper-pagination-progress-body-helper"></div>
-                </div>
-              </div>
-              <!-- End Slide -->
             </div>
           </div>
         </div>
@@ -117,6 +83,7 @@
                       <a class="card-link" href="/categories/{{$post->category}}">{{ ucfirst($post->category) }}</a>
                     </div>
 
+                    {{--                       <a class="text-dark" href="{{route('blog.show',['id'=>\App\Http\Controllers\ContentController::stringify_title($post->post_title)]) }}">{{ $post->post_title }}</a> --}}
                     <h3 class="card-title">
                       <a class="text-dark" href="{{route('blog.show',['id'=>$post->id]) }}">{{ $post->post_title }}</a>
                     </h3>

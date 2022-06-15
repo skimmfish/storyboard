@@ -7,7 +7,7 @@
     <div class="container content-space-t-3 content-space-t-lg-4 content-space-b-2">
       <div class="w-lg-65 mx-lg-auto">
         <div class="mb-4">
-        <h1 class="h2 center text-lg text-lg gd" style="text-transform:Capitalize;">{{$post->post_title}}</h1>
+        <h1 class="h2 center text-lg text-lg gd" style="text-transform:Capitalize;">{{$post->post_title}} @if(Auth::check()) <a href="{{ route('admin.dashboard.edit-post',['id'=>$post->id]) }}" style="font-size:13.5px;"><u>Edit Post</u></a> @endif</h1>
 
     </div>
 
@@ -135,7 +135,7 @@
               <a class="btn btn-ghost-secondary btn-sm btn-icon rounded-circle me-2" href="https://instagram.com/palmstoryboard">
                 <i class="bi-instagram"></i>
               </a>
-              
+
             </div>
           </div>
           <!-- End Col -->

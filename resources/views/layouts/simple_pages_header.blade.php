@@ -10,8 +10,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $description }}" >
-    <meta name="keywords" content="@if($tag) {{$tag}} @else {{$title}} @endif" >
+    <meta name="description" content="@if(isset($description)) {{ $description }} @endif" >
+    <meta name="keywords" content="@if(isset($tag)) {{$tag}} @else {{$title}} @endif" >
 
     <title> @if(isset($title)) {{ $title }} @else {{ 'Home' }}	@endif - MyStoryBoard	</title>
 
@@ -45,20 +45,25 @@
 }
 
 
-body{
+body,h3{
 font-family:'Spartan','GD Sherpa Regular','Brandon Grotesque' !important;font-size:15px;COLOR:#000;
 }
+h3{font-size:26px;}
 .form-label, .accordion-body, p{font-size:15px;line-height:34px;font-weight:600;}
 ul>li{line-height:35px;}
 .img_circle{
 	width:40px;height:40px;border-radius:50%;
 }
-.form-control{font-size:13px;}
+.form-control{font-size:13px;width:100%;}
 h6{font-size:19px;font-weight:700;font-family:'Spartan','Brandon Grotesque';}
 .mb-0{
-
 	font-family:'Spartan','GD Sherpa Regular','Brandon Grotesque';font-size:20px;line-height:40px;
-
+}
+@media(max-width:475px){
+.floating_widget{
+    display:none;
+margin-left:-54px;
+}
 }
 </style>
 
@@ -82,7 +87,7 @@ divX.style.display = "none";
     <div class="container">
       <nav class="js-mega-menu navbar-nav-wrap">
         <!-- Default Logo -->
-        <a class="navbar-brand" href="{{ config('app_url') }}" aria-label="{{ config('app_name') }}" style="font-family:Chiller;font-size:32px;">
+        <a class="navbar-brand" href="{{ route('blog.index') }}" aria-label="{{ config('app_name') }}" style="font-family:Chiller;font-size:32px;">
     StoryBoard
     </a>
         <!-- End Default Logo -->
@@ -90,7 +95,7 @@ divX.style.display = "none";
         <!-- Toggler -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-default">
-            <i class="bi-list"></i>
+            <i class="bi-list" style="color:#000"></i>
           </span>
           <span class="navbar-toggler-toggled">
             <i class="bi-x"></i>
@@ -141,7 +146,7 @@ divX.style.display = "none";
 
               <!-- Blog -->
               <li class="hs-has-sub-menu nav-item">
-                <a id="blogMegaMenu" class="hs-mega-menu-invoker nav-link" href="{{route('admin.dashboard.new-ebook')}}" role="button" aria-expanded="false">e-Books</a>
+            <a id="blogMegaMenu" class="hs-mega-menu-invoker nav-link" href="{{route('admin.dashboard.new-ebook')}}" role="button" aria-expanded="false">e-Books</a>
 
                 <!-- Mega Menu -->
                 <div class="hs-sub-menu" aria-labelledby="blogMegaMenu" style="min-width: 14rem;">
@@ -158,6 +163,7 @@ divX.style.display = "none";
                 </div>
                 <!-- End Mega Menu -->
               </li>
+
 
               <!-- Button -->
               <li class="nav-item">

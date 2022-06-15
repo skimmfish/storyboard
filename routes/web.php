@@ -19,7 +19,9 @@ use App\Http\Controllers\CommentController;
 
 Route::get('/', '\App\Http\Controllers\ContentController@index')->name('blog.index');
 
-Route::get('about-us', '\App\Http\Controllers\ContentController@index')->name('about-us');
+Route::get('about-us', function(){
+    return view('about-us',['title'=>'About MyStoryBoard']);
+})->name('about-us');
 
 Route::middleware('auth:api', 'throttle:60, 1')->get('/user', function(Request $request){
 
@@ -90,16 +92,20 @@ Route::post('authenticate','Auth\LoginController@authenticate');
 Route::get('pages/privacypolicy', '\App\Http\Controllers\ContentController@create')->name('blog.privacypolicy');
 
 Route::get('contact-us', function(){
-	return view('contact')->with('title','Contact Us - My Story Board');
+	return view('contact-us')->with('title','Contact Us - MyStoryBoard');
 })->name('contact-us');
 
+
+//for contact us form
+Route::post('contact_models','\App\Http\Controllers\ContactusController@store')->name('contact_models.store');
+
 Route::get('terms_of_use', function(){
-	return view('terms_of_use')->with('title','Terms of Use - My Story Board');
+	return view('terms_of_use')->with('title','Terms of Use - MyStoryBoard');
 });
 
 //for returning story genre pages
 Route::get('genre', function(){
-	return view('genre')->with('title','Story Genre - My Story Board');
+	return view('genre')->with('title','Story Genre - MyStoryBoard');
 });
 
 //for getting posts based on tags
@@ -117,9 +123,9 @@ Route::post('emailsubscription','\App\Http\Controllers\EmailSubscriptionControll
 
 //author's profile
 Route::get('author/{id}',function($id){
-    $allposts = \App\Models\Content::where(['user_id'=>$id])->orderBy('created_at','DESC')->get();
+    $allposts = \App\Models\Content::where(['user_id'=>$id,'publish_status'=>true])->orderBy('created_at','DESC')->paginate(10);
     //fetching the user's name
-    $user = \App\Models\Users::find($id)->name;
+    $user = \App\Models\User::find($id)->name;
     return view('blog.author_posts')->with(['pagetitle'=>"Stories written by $user",'allposts'=>$allposts,'title'=>"Stories written by $user",'id'=>$id]);
 })->name('blog.author_posts');
 

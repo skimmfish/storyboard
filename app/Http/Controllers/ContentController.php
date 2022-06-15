@@ -116,7 +116,7 @@ return $tags = \App\Models\TagManager::all();
 *@return String <$bgFile>
 */
 public function saveFile(Request $request,$formFieldHandler,$location){
-$fileName = time().'.'.$request->$formFieldHandler->extension();  
+$fileName = time().'.'.$request->$formFieldHandler->extension();
      $request->$formFieldHandler->move(public_path($location), $fileName);
      return $fileName;
 }
@@ -246,7 +246,7 @@ return $related;
 public function update(Request $request, $id)
 {
     $post = \App\Models\Content::find($id);
-    
+
     $rules = [
 		'post_title'=>'required|max:140',
 		'description'=>'required',
@@ -272,7 +272,7 @@ public function update(Request $request, $id)
         $post->category = $request->category;
         $post->tags = $request->tags;
         $post->post_bg_img = $this->saveFile($request,'post_bg_img','img/1920x1080');
-    
+
     //saving the updated info to the db table
     $post->save($request->all());
 
@@ -293,10 +293,12 @@ public function update(Request $request, $id)
 
 //custom functions to handle content filtering
 public function findByCategory($cat){
-	$postByCategory = DB::select("SELECT *FROM contents WHERE category =? AND publish_status=? ORDER BY created_at DESC",[$cat,1]);
-	return view('blog.cat')->with('postByCategory',$postByCategory);
+	$postByCategory = \App\Models\Content::where(['category'=>$cat,'publish_status'=>true])->orderBy('created_at','DESC')->paginate(10);
+
+	return view('blog.cat')->with(['postByCategory'=>$postByCategory,'cat'=>$cat,'startup'=>$this->getByCat('startup_story'),'tags'=>$this->get_tags()]);
 
 }
+
 
 /***
  * API methods starts here
@@ -334,5 +336,19 @@ public function delete($id){
    $p->delete();
    $_SESSION['message']='Post deleted successfully';
    return redirect()->route('admin.dashboard.home');
+}
+
+/*@param String <$title>
+*@return concatenated string with a dash
+*/
+public static function stringify_title($title){
+//initializing the title
+    $finalString = $title;
+    $array = explode(" ",$title);
+    echo sizeof($array);
+    for($i=0;$i<sizeof($array);$i++){
+        $finalString = '-'.$array[$i];
+    }
+return $finalString;
 }
 }
