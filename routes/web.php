@@ -226,4 +226,7 @@ Route::get('logout',function(){
     return redirect()->route('blog.index');
 })->name('logout');
 
+
+
+
 ?>
